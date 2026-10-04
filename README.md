@@ -102,6 +102,3 @@ The platform includes 1-click demo accounts built into the Settings modal and lo
 - **Superadmin**: Admin (`admin@skills2job.example.com` / `AdminSkills2026!`)
 
 ---
-
-## 📄 License
-MIT License
