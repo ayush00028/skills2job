@@ -33,19 +33,27 @@ def build_job_dict(job: Job) -> dict:
     }
 
 def get_candidate_context(user: User) -> dict:
-    skills = [s.name for s in user.skills] if user and user.skills else ["React", "JavaScript", "Node.js", "Python", "SQL", "Git"]
-    exp = user.job_seeker_profile.experience_years if (user and user.job_seeker_profile) else 3.0
-    edu = user.job_seeker_profile.education_degree if (user and user.job_seeker_profile) else "B.Tech in Computer Science"
+    if user:
+        skills = [s.name for s in user.skills]
+        exp = user.job_seeker_profile.experience_years if user.job_seeker_profile else 1.0
+        edu = user.job_seeker_profile.education_degree if user.job_seeker_profile else "Bachelor's Degree"
+        name = user.full_name
+    else:
+        skills = ["React", "JavaScript", "Node.js", "Python", "SQL", "Git"]
+        exp = 3.0
+        edu = "B.Tech in Computer Science"
+        name = "Alex Sharma"
+
     repos = []
     if user:
         from app.database import GitHubRepository
         db_session = Session.object_session(user)
         if db_session:
-            repos = db_session.query(GitHubRepository).filter(GitHubRepository.user_id == user.id).all()
-            repos = [{"name": r.name, "description": r.description, "languages": r.languages, "detected_technologies": r.detected_technologies} for r in repos]
+            repos_objs = db_session.query(GitHubRepository).filter(GitHubRepository.user_id == user.id).all()
+            repos = [{"name": r.name, "description": r.description, "languages": r.languages, "detected_technologies": r.detected_technologies} for r in repos_objs]
             
     return {
-        "name": user.full_name if user else "Alex Sharma",
+        "name": name,
         "skills": skills,
         "experience_years": exp,
         "education_degree": edu,

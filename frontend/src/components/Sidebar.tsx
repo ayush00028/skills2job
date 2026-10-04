@@ -43,22 +43,22 @@ export const Sidebar = () => {
   const links = isHR ? hrLinks : seekerLinks;
 
   return (
-    <aside className="w-64 bg-white border-r border-slate-200 hidden lg:flex flex-col shrink-0 h-[calc(100vh-4rem)] sticky top-16">
+    <aside className="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 hidden lg:flex flex-col shrink-0 h-[calc(100vh-4rem)] sticky top-16 transition-colors">
       
       {/* Role Indicator Banner */}
-      <div className="p-4 border-b border-slate-100 bg-slate-50/70">
+      <div className="p-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/50">
         <div className="flex items-center gap-2.5">
           <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs ${
-            isHR ? 'bg-amber-100 text-amber-800' : 'bg-indigo-100 text-indigo-700'
+            isHR ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300' : 'bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300'
           }`}>
             {isHR ? 'HR' : 'JS'}
           </div>
           <div className="flex flex-col">
-            <span className="text-xs font-bold text-slate-800">
+            <span className="text-xs font-bold text-slate-800 dark:text-white">
               {isHR ? 'HR Recruiter Portal' : 'Job Seeker Portal'}
             </span>
-            <span className="text-[11px] text-slate-400">
-              {isHR ? 'TechCorp Global' : 'Alex Sharma'}
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 truncate max-w-[150px]">
+              {isHR ? 'TechCorp Global' : (user?.full_name || 'Candidate')}
             </span>
           </div>
         </div>
@@ -77,10 +77,10 @@ export const Sidebar = () => {
               className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                 isActive
                   ? "bg-indigo-600 text-white shadow-xs font-bold"
-                  : "text-slate-600 hover:bg-slate-100 hover:text-indigo-600"
+                  : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400"
               }`}
             >
-              <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-indigo-600'}`} />
+              <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500 group-hover:text-indigo-600'}`} />
               <span>{item.label}</span>
             </Link>
           );
@@ -88,15 +88,15 @@ export const Sidebar = () => {
       </div>
 
       {/* Footer System Status */}
-      <div className="p-4 border-t border-slate-100 text-xs">
-        <div className="flex items-center justify-between text-slate-500 mb-1">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase">AI Vector Engine</span>
-          <span className="inline-flex items-center gap-1 text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">
+      <div className="p-4 border-t border-slate-100 dark:border-slate-800 text-xs">
+        <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-1">
+          <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase">AI Vector Engine</span>
+          <span className="inline-flex items-center gap-1 text-[10px] text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full font-bold border border-emerald-100 dark:border-emerald-900">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
             Online
           </span>
         </div>
-        <p className="text-[11px] text-slate-400 leading-tight">5-Factor explainable matching & vector similarity active.</p>
+        <p className="text-[11px] text-slate-400 dark:text-slate-500 leading-tight">5-Factor explainable matching & vector similarity active.</p>
       </div>
     </aside>
   );

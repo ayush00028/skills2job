@@ -14,6 +14,10 @@ class UserLogin(BaseModel):
     password: str
     remember_me: Optional[bool] = False
 
+class OTPRequest(BaseModel):
+    email: EmailStr
+    purpose: Optional[str] = "LOGIN"  # LOGIN or VERIFY
+
 class OTPVerify(BaseModel):
     email: EmailStr
     code: str
@@ -29,6 +33,8 @@ class TokenResponse(BaseModel):
 
 # Profile Schemas
 class JobSeekerProfileUpdate(BaseModel):
+    full_name: Optional[str] = None
+    phone: Optional[str] = None
     headline: Optional[str] = None
     bio: Optional[str] = None
     city: Optional[str] = None
@@ -41,9 +47,11 @@ class JobSeekerProfileUpdate(BaseModel):
     work_type: Optional[str] = None
     employment_type: Optional[str] = None
     experience_level: Optional[str] = None
+    experience_years: Optional[float] = None
     expected_salary: Optional[str] = None
     preferred_industries: Optional[str] = None
     education_degree: Optional[str] = None
+    skills: Optional[List[Any]] = None
 
 class HRProfileUpdate(BaseModel):
     company_name: Optional[str] = None

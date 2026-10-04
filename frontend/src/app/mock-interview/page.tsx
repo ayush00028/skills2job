@@ -101,35 +101,35 @@ function MockInterviewContent() {
   };
 
   return (
-    <div className="flex-1 flex flex-row min-h-screen bg-slate-50">
+    <div className="flex-1 flex flex-row min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors">
       <Sidebar />
 
       <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full space-y-6">
         
         {/* Header */}
         <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 block mb-1">
+          <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 block mb-1">
             Interactive AI Evaluator
           </span>
-          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             AI Mock Interview Simulator
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
             Dynamic questions formulated from your resume, target job requirements, and detected skill gaps.
           </p>
         </div>
 
-        {/* Setup Configuration (Page 44) */}
-        <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-4">
+        {/* Setup Configuration */}
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-4">
           <div className="grid sm:grid-cols-3 gap-4">
             
             {/* Target Job */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">Target Job</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Target Job</label>
               <select
                 value={selectedJobId}
                 onChange={(e) => setSelectedJobId(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600"
+                className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-600"
               >
                 {jobs.map((j) => (
                   <option key={j.id} value={j.id}>{j.title} ({j.company_name})</option>
@@ -139,15 +139,15 @@ function MockInterviewContent() {
 
             {/* Difficulty */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">Difficulty</label>
-              <div className="grid grid-cols-3 gap-1 bg-slate-100 p-1 rounded-xl">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Difficulty</label>
+              <div className="grid grid-cols-3 gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
                 {["Beginner", "Intermediate", "Advanced"].map((d) => (
                   <button
                     key={d}
                     type="button"
                     onClick={() => setDifficulty(d)}
                     className={`py-1.5 text-xs font-bold rounded-lg transition-all ${
-                      difficulty === d ? "bg-white text-indigo-600 shadow-2xs" : "text-slate-600"
+                      difficulty === d ? "bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-300 shadow-2xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                     }`}
                   >
                     {d}
@@ -158,15 +158,15 @@ function MockInterviewContent() {
 
             {/* Interview Type */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">Type</label>
-              <div className="grid grid-cols-3 gap-1 bg-slate-100 p-1 rounded-xl">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Type</label>
+              <div className="grid grid-cols-3 gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
                 {["Technical", "Behavioral", "Mixed"].map((t) => (
                   <button
                     key={t}
                     type="button"
                     onClick={() => setInterviewType(t)}
                     className={`py-1.5 text-xs font-bold rounded-lg transition-all ${
-                      interviewType === t ? "bg-white text-indigo-600 shadow-2xs" : "text-slate-600"
+                      interviewType === t ? "bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-300 shadow-2xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                     }`}
                   >
                     {t}
@@ -189,21 +189,21 @@ function MockInterviewContent() {
           </div>
         </div>
 
-        {/* Questions & Answering Form (Pages 44-45) */}
+        {/* Questions & Answering Form */}
         <div className="space-y-4">
           {questions.map((q, idx) => (
-            <div key={q.id} className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-3">
+            <div key={q.id} className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-3">
               <div className="flex items-center justify-between">
                 <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-extrabold ${
-                  q.category === 'Skill Gap' ? 'bg-amber-100 text-amber-900 border border-amber-200' :
-                  q.category === 'Technical' ? 'bg-indigo-100 text-indigo-900 border border-indigo-200' : 'bg-slate-100 text-slate-800'
+                  q.category === 'Skill Gap' ? 'bg-amber-100 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-200 dark:border-amber-800' :
+                  q.category === 'Technical' ? 'bg-indigo-100 text-indigo-900 dark:bg-indigo-950/60 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800' : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200'
                 }`}>
                   Question {idx + 1} • {q.category}
                 </span>
-                <span className="text-[11px] text-slate-400 font-semibold">{q.context}</span>
+                <span className="text-[11px] text-slate-400 dark:text-slate-500 font-semibold">{q.context}</span>
               </div>
 
-              <h3 className="text-sm sm:text-base font-bold text-slate-900">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
                 "{q.question}"
               </h3>
 
@@ -211,12 +211,12 @@ function MockInterviewContent() {
                 rows={4}
                 value={answers[q.id] || ""}
                 onChange={(e) => setAnswers({ ...answers, [q.id]: e.target.value })}
-                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-medium text-slate-800 focus:bg-white focus:outline-none focus:border-indigo-600"
+                className="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl text-xs font-medium text-slate-800 dark:text-slate-200 focus:bg-white dark:focus:bg-slate-900 focus:outline-none focus:border-indigo-600"
                 placeholder="Type your response here..."
               ></textarea>
 
-              <div className="text-[11px] text-slate-400 bg-slate-50 p-2.5 rounded-xl border border-slate-100 flex items-start gap-1.5">
-                <HelpCircle className="w-3.5 h-3.5 text-indigo-500 shrink-0 mt-0.5" />
+              <div className="text-[11px] text-slate-400 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/60 p-2.5 rounded-xl border border-slate-100 dark:border-slate-800 flex items-start gap-1.5">
+                <HelpCircle className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400 shrink-0 mt-0.5" />
                 <span><strong>Hint:</strong> {q.sample_answer_hint}</span>
               </div>
             </div>
@@ -236,63 +236,63 @@ function MockInterviewContent() {
           )}
         </div>
 
-        {/* Evaluation Report (Page 45) */}
+        {/* Evaluation Report */}
         {report && (
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-elevated space-y-6 animate-in fade-in">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-elevated space-y-6 animate-in fade-in">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 block">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 block">
                   AI Evaluation Scorecard
                 </span>
-                <h3 className="text-xl font-extrabold text-slate-900">Interview Performance Report</h3>
+                <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">Interview Performance Report</h3>
               </div>
               <div className="text-right">
-                <span className="text-3xl font-extrabold text-indigo-600 leading-none">{report.overall_score}%</span>
-                <span className="text-[10px] font-bold text-slate-400 uppercase block mt-0.5">Overall Score</span>
+                <span className="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 leading-none">{report.overall_score}%</span>
+                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase block mt-0.5">Overall Score</span>
               </div>
             </div>
 
             {/* Pillar Scores */}
             <div className="grid grid-cols-3 gap-3 text-center">
-              <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
-                <span className="text-xl font-extrabold text-slate-900">{report.technical_score}%</span>
-                <span className="text-[10px] uppercase font-bold text-slate-400 block mt-1">Technical Rigor</span>
+              <div className="p-3.5 bg-slate-50 dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700">
+                <span className="text-xl font-extrabold text-slate-900 dark:text-white">{report.technical_score}%</span>
+                <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-400 block mt-1">Technical Rigor</span>
               </div>
-              <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
-                <span className="text-xl font-extrabold text-slate-900">{report.communication_score}%</span>
-                <span className="text-[10px] uppercase font-bold text-slate-400 block mt-1">Communication</span>
+              <div className="p-3.5 bg-slate-50 dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700">
+                <span className="text-xl font-extrabold text-slate-900 dark:text-white">{report.communication_score}%</span>
+                <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-400 block mt-1">Communication</span>
               </div>
-              <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
-                <span className="text-xl font-extrabold text-slate-900">{report.problem_solving_score}%</span>
-                <span className="text-[10px] uppercase font-bold text-slate-400 block mt-1">Problem Solving</span>
+              <div className="p-3.5 bg-slate-50 dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700">
+                <span className="text-xl font-extrabold text-slate-900 dark:text-white">{report.problem_solving_score}%</span>
+                <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-400 block mt-1">Problem Solving</span>
               </div>
             </div>
 
-            <p className="text-xs text-slate-700 bg-indigo-50/60 p-3.5 rounded-2xl border border-indigo-100 leading-relaxed font-medium">
+            <p className="text-xs text-slate-700 dark:text-slate-300 bg-indigo-50/60 dark:bg-indigo-950/40 p-3.5 rounded-2xl border border-indigo-100 dark:border-indigo-900/60 leading-relaxed font-medium">
               {report.summary}
             </p>
 
-            {/* Weak Areas & Recommended Topics (Page 45) */}
+            {/* Weak Areas & Recommended Topics */}
             <div className="grid md:grid-cols-2 gap-4 text-xs">
-              <div className="p-4 bg-rose-50/50 rounded-2xl border border-rose-100 space-y-2">
-                <span className="text-xs font-extrabold text-rose-900 uppercase tracking-wider block">
+              <div className="p-4 bg-rose-50/50 dark:bg-rose-950/30 rounded-2xl border border-rose-100 dark:border-rose-900/40 space-y-2">
+                <span className="text-xs font-extrabold text-rose-900 dark:text-rose-300 uppercase tracking-wider block">
                   Weak Areas to Polish:
                 </span>
                 {report.weak_areas?.map((w: string, i: number) => (
-                  <div key={i} className="flex items-start gap-1.5 text-slate-700">
+                  <div key={i} className="flex items-start gap-1.5 text-slate-700 dark:text-slate-300">
                     <span className="text-rose-500 font-bold">•</span>
                     <span>{w}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100 space-y-2">
-                <span className="text-xs font-extrabold text-indigo-900 uppercase tracking-wider block">
+              <div className="p-4 bg-indigo-50/50 dark:bg-indigo-950/30 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 space-y-2">
+                <span className="text-xs font-extrabold text-indigo-900 dark:text-indigo-300 uppercase tracking-wider block">
                   Recommended Study Topics:
                 </span>
                 {report.recommended_topics?.map((r: string, i: number) => (
-                  <div key={i} className="flex items-start gap-1.5 text-slate-700">
-                    <span className="text-indigo-600 font-bold">•</span>
+                  <div key={i} className="flex items-start gap-1.5 text-slate-700 dark:text-slate-300">
+                    <span className="text-indigo-600 dark:text-indigo-400 font-bold">•</span>
                     <span>{r}</span>
                   </div>
                 ))}

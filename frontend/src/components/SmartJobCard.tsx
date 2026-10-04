@@ -58,14 +58,14 @@ export const SmartJobCard: React.FC<SmartJobCardProps> = ({ job, onApplySuccess 
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 90) return "text-emerald-700 bg-emerald-50 border-emerald-200";
-    if (score >= 75) return "text-indigo-700 bg-indigo-50 border-indigo-200";
-    if (score >= 60) return "text-amber-700 bg-amber-50 border-amber-200";
-    return "text-slate-600 bg-slate-100 border-slate-200";
+    if (score >= 90) return "text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800";
+    if (score >= 75) return "text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/60 border-indigo-200 dark:border-indigo-800";
+    if (score >= 60) return "text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 border-amber-200 dark:border-amber-800";
+    return "text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700";
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/90 hover:border-indigo-300 hover:shadow-elevated transition-all duration-200 p-5 flex flex-col justify-between group">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-600 hover:shadow-elevated transition-all duration-200 p-5 flex flex-col justify-between group">
       <div>
         {/* Header: Company, Logo, Title & Score Badge */}
         <div className="flex items-start justify-between gap-3 mb-3">
@@ -73,13 +73,13 @@ export const SmartJobCard: React.FC<SmartJobCardProps> = ({ job, onApplySuccess 
             <img
               src={job.company_logo || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100"}
               alt={job.company_name}
-              className="w-12 h-12 rounded-xl object-contain p-1.5 border border-slate-100 bg-slate-50 shadow-2xs group-hover:scale-105 transition-transform"
+              className="w-12 h-12 rounded-xl object-contain p-1.5 border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 shadow-2xs group-hover:scale-105 transition-transform"
             />
             <div>
-              <h3 className="text-base font-bold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-1">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-1">
                 {job.title}
               </h3>
-              <p className="text-xs font-semibold text-slate-500">{job.company_name}</p>
+              <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">{job.company_name}</p>
             </div>
           </div>
 
@@ -91,25 +91,25 @@ export const SmartJobCard: React.FC<SmartJobCardProps> = ({ job, onApplySuccess 
         </div>
 
         {/* Location, Salary, Experience Pills */}
-        <div className="flex flex-wrap gap-2 text-xs text-slate-600 mb-4 font-medium">
-          <span className="inline-flex items-center gap-1 bg-slate-100 px-2.5 py-1 rounded-lg">
-            <MapPin className="w-3.5 h-3.5 text-slate-400" />
+        <div className="flex flex-wrap gap-2 text-xs text-slate-600 dark:text-slate-300 mb-4 font-medium">
+          <span className="inline-flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg">
+            <MapPin className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
             {job.location}
           </span>
-          <span className="inline-flex items-center gap-1 bg-slate-100 px-2.5 py-1 rounded-lg">
-            <IndianRupee className="w-3.5 h-3.5 text-slate-400" />
+          <span className="inline-flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg">
+            <IndianRupee className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
             {job.salary_range}
           </span>
           {job.experience_min !== undefined && (
-            <span className="inline-flex items-center gap-1 bg-slate-100 px-2.5 py-1 rounded-lg">
-              <Briefcase className="w-3.5 h-3.5 text-slate-400" />
+            <span className="inline-flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg">
+              <Briefcase className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
               {job.experience_min}–{job.experience_max || 5} yrs
             </span>
           )}
           {job.eligibility_status && (
             <span className={`inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-bold ${
-              job.eligibility_status === 'ELIGIBLE' ? 'bg-emerald-100 text-emerald-800' :
-              job.eligibility_status === 'PARTIALLY ELIGIBLE' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'
+              job.eligibility_status === 'ELIGIBLE' ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300' :
+              job.eligibility_status === 'PARTIALLY ELIGIBLE' ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
             }`}>
               {job.eligibility_status}
             </span>
@@ -118,22 +118,22 @@ export const SmartJobCard: React.FC<SmartJobCardProps> = ({ job, onApplySuccess 
 
         {/* Matched Skills */}
         <div className="mb-2">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1">
             Matched Skills
           </span>
           <div className="flex flex-wrap gap-1.5">
             {job.matched_skills && job.matched_skills.length > 0 ? (
               job.matched_skills.slice(0, 4).map((s, idx) => (
-                <span key={idx} className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 text-xs px-2.5 py-1 rounded-lg font-medium border border-emerald-100">
-                  <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                <span key={idx} className="inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 text-xs px-2.5 py-1 rounded-lg font-medium border border-emerald-100 dark:border-emerald-900">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                   {s}
                 </span>
               ))
             ) : (
-              <span className="text-xs text-slate-400">Skills matching in progress</span>
+              <span className="text-xs text-slate-400 dark:text-slate-500">Skills matching in progress</span>
             )}
             {job.matched_skills && job.matched_skills.length > 4 && (
-              <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-lg font-medium">
+              <span className="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-lg font-medium">
                 +{job.matched_skills.length - 4} more
               </span>
             )}
@@ -143,13 +143,13 @@ export const SmartJobCard: React.FC<SmartJobCardProps> = ({ job, onApplySuccess 
         {/* Missing Skills */}
         {job.missing_skills && job.missing_skills.length > 0 && (
           <div className="mb-4">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1">
               Missing Skills
             </span>
             <div className="flex flex-wrap gap-1.5">
               {job.missing_skills.slice(0, 3).map((s, idx) => (
-                <span key={idx} className="inline-flex items-center gap-1 bg-rose-50 text-rose-700 text-xs px-2.5 py-1 rounded-lg font-medium border border-rose-100">
-                  <AlertTriangle className="w-3 h-3 text-rose-500" />
+                <span key={idx} className="inline-flex items-center gap-1 bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 text-xs px-2.5 py-1 rounded-lg font-medium border border-rose-100 dark:border-rose-900">
+                  <AlertTriangle className="w-3 h-3 text-rose-500 dark:text-rose-400" />
                   {s}
                 </span>
               ))}
@@ -159,10 +159,10 @@ export const SmartJobCard: React.FC<SmartJobCardProps> = ({ job, onApplySuccess 
       </div>
 
       {/* Card Footer Actions */}
-      <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2 mt-2">
+      <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2 mt-2">
         <Link
           href={`/jobs/${job.id}`}
-          className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
+          className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
         >
           <span>View Job & Why</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -172,7 +172,7 @@ export const SmartJobCard: React.FC<SmartJobCardProps> = ({ job, onApplySuccess 
           <button
             onClick={handleSave}
             className={`p-2 rounded-xl border text-xs font-semibold transition-colors ${
-              saved ? 'bg-indigo-50 text-indigo-600 border-indigo-200' : 'bg-white text-slate-500 hover:bg-slate-100 border-slate-200'
+              saved ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800' : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700'
             }`}
             title="Save Job"
           >

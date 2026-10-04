@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import create_engine, Column, Integer, String, Text, Float, Boolean, DateTime, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, Text, Float, Boolean, DateTime, ForeignKey, event
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
 
 DATABASE_URL = "sqlite:///./skills2job.db"
@@ -7,6 +7,16 @@ DATABASE_URL = "sqlite:///./skills2job.db"
 engine = create_engine(
     DATABASE_URL, connect_args={"check_same_thread": False}
 )
+
+# Enable SQLite Write-Ahead Logging (WAL), busy timeout, and synchronous=NORMAL for concurrent speed & durability
+@event.listens_for(engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA journal_mode=WAL;")
+    cursor.execute("PRAGMA synchronous=NORMAL;")
+    cursor.execute("PRAGMA busy_timeout=5000;")
+    cursor.close()
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -255,3 +265,14 @@ class Notification(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     user = relationship("User", back_populates="notifications")
+
+class OTPRecord(Base):
+    __tablename__ = "otp_records"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(255), index=True, nullable=False)
+    code = Column(String(10), nullable=False)
+    purpose = Column(String(50), default="LOGIN")  # LOGIN, REGISTER, VERIFY
+    expires_at = Column(DateTime, nullable=False)
+    is_used = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.utcnow)

@@ -12,6 +12,8 @@ In today’s recruitment landscape, job seekers face severe friction due to opaq
 
 **Skills2Job** is an intelligent, full-stack career matchmaking and talent acquisition platform designed to solve algorithmic rejection. The platform ingests candidate resumes, analyzes connected GitHub repositories, evaluates career preferences, and compares them against multi-tiered job requirements. It delivers an **Explainable 5-Factor Compatibility Score (0–100%)**, separates mandatory prerequisites from optional skills via an **Eligibility Engine**, diagnoses **Skill Gaps** with market demand metrics, generates **4-Week Project-Based Learning Roadmaps**, and provides reciprocal matchmaking for recruiters.
 
+All user activities—authentication (JWT + 6-digit email OTP), onboarding profile details, custom GitHub profiles, uploaded resumes, and skill inventories—are dynamically persisted in a relational database with real-time recalculation of job compatibility and ATS scoring.
+
 ---
 
 ## 3. PROBLEM STATEMENT
@@ -19,16 +21,20 @@ In today’s recruitment landscape, job seekers face severe friction due to opaq
 2. **Conflation of Eligibility and Compatibility**: Traditional job boards disqualify candidates for lacking optional or nice-to-have technologies, even when they satisfy all core prerequisites.
 3. **Lack of Actionable Feedback**: Current platforms provide static score numbers without actionable answers to *"What is missing?"* and *"What should I do to qualify?"*.
 4. **Disconnection Between Code Proof and Resumes**: Written resumes often fail to reflect practical coding competencies verifiable in open-source code repositories (e.g., GitHub).
-5. **Inefficient Candidate Screening for Employers**: Recruiters spend excessive hours sifting through non-tailored resumes rather than evaluating pre-ranked, competency-verified candidate profiles.
+5. **Static/Mock Data Inconsistencies**: Many career platforms present pre-rendered dummy profiles rather than dynamically storing and matching the user's authentic skills and experience upon sign-in.
+6. **Inefficient Candidate Screening for Employers**: Recruiters spend excessive hours sifting through non-tailored resumes rather than evaluating pre-ranked, competency-verified candidate profiles.
 
 ---
 
 ## 4. OBJECTIVES OF THE PROJECT
-- Develop an NLP-driven resume parsing pipeline capable of extracting technical competencies, education, and tenure into structured schema.
-- Implement an automated GitHub intelligence module that scans repositories, infers tech stacks, and formats impact-driven bullet points for resumes.
+- Develop an NLP-driven resume parsing pipeline capable of extracting technical competencies, education, and tenure from multi-format files (`.pdf`, `.docx`, `.txt`) into structured schema.
+- Implement an automated GitHub intelligence module that parses custom repository profiles or handles (`https://github.com/username`), extracts repositories, infers tech stacks, and formats impact-driven bullet points for resumes.
+- Implement secure, persistent authentication utilizing JSON Web Tokens (JWT) and 6-digit email One-Time Passwords (OTP).
 - Formulate a transparent, 5-factor explainable matching algorithm blending deterministic rules with semantic dense vector embeddings.
 - Engineer an Eligibility vs Compatibility Engine that evaluates Required, Preferred, and Bonus skills independently.
+- Provide dynamic profile management with an interactive Resume Viewer and Re-upload system that automatically re-evaluates candidate compatibility across all jobs upon resume updates.
 - Formulate dynamic career progression tools: Skill Gap Analysis, 4-Week Actionable Roadmaps, AI Cover Letter Generator, AI Mock Interview Simulator, and a Kanban Application Tracker.
+- Implement an accessible, high-contrast Dark and Light mode theme engine across the entire interface.
 - Provide a dedicated Recruiter Portal for candidate discovery, multi-tiered job postings, and interview management.
 - Provide an interactive Technical Viva Visualizer demonstrating the end-to-end vector pipeline for evaluation and academic review.
 
@@ -38,16 +44,20 @@ In today’s recruitment landscape, job seekers face severe friction due to opaq
 
 ### Ingestion to Recommendation Pipeline
 ```
-[Candidate Resume (PDF)] ──> [Text Sanitization] ──> [NLP / NER Entity Extraction] ──> [Candidate Profile] ──> [Vector Embedding] ──┐
-                                                                                                                                    ├──> [Cosine Similarity & 5-Factor Matcher]
-[Job Description (Text)] ──> [Requirement Parser] ──> [3-Tier Skill Segmentation]  ──> [Job Profile]       ──> [Vector Embedding] ──┘         │
-                                                                                                                                               ▼
-                                                                                                                                   [Explainable Compatibility Score]
-                                                                                                                                               │
-                                                                                                                                               ├─> [Eligibility Status: Eligible / Partial / Low]
-                                                                                                                                               ├─> [Skill Gap Analysis & 4-Week Roadmap]
-                                                                                                                                               ├─> [AI Mock Interview & Cover Letter]
-                                                                                                                                               └─> [Recruiter Ranked Candidate Pool]
+[Candidate Resume (PDF/DOCX/TXT)] ──> [Text Extraction & Sanitization] ──> [NLP / Keyword Parser] ──> [Dynamic SQLite DB]
+                                                                                                               │
+[User GitHub URL / Handle]        ──> [GitHub Public API Integration]  ──> [Code Intelligence Engine] ────────┤
+                                                                                                               ▼
+[Candidate Authenticated Profile] ─────────────────────────────────────────────────────────────> [Candidate Feature Vector] ──┐
+                                                                                                                                ├──> [5-Factor Matching & Cosine Engine]
+[Job Description (Structured)]    ──> [3-Tier Skill Segmentation: Req/Pref/Bonus] ─────────────> [Job Feature Vector]        ──┘         │
+                                                                                                                                           ▼
+                                                                                                                               [Explainable Compatibility Score]
+                                                                                                                                           │
+                                                                                                                                           ├─> [Eligibility Status: Eligible / Partial / Low]
+                                                                                                                                           ├─> [Skill Gap Analysis & 4-Week Roadmap]
+                                                                                                                                           ├─> [AI Mock Interview & Cover Letter]
+                                                                                                                                           └─> [Recruiter Ranked Candidate Pool]
 ```
 
 ---
@@ -80,24 +90,27 @@ $$\text{Status} = \begin{cases}
 
 ## 7. MODULE DESCRIPTION
 
-### Module 1: Authentication & Role-Based Access Control (RBAC)
-- Multi-persona support: `JOB_SEEKER`, `HR` (Recruiter), and `ADMIN`.
-- Secure password hashing, JWT session lifecycle management, and 6-digit email OTP verification.
-- **1-Click Demo Switcher** providing instantaneous login as Alex Sharma (Candidate) or Sarah Jenkins (Recruiter) for viva evaluations.
+### Module 1: Authentication, OTP Verification & Session Persistence
+- Secure user registration and login supporting multi-persona roles: `JOB_SEEKER`, `HR` (Recruiter), and `ADMIN`.
+- **6-Digit Email OTP Verification**: Cryptographically secure one-time password workflow verifying email ownership with resend throttles and expiration timers.
+- **JWT Session Persistence**: Stateless authentication with bearer token authorization, persisting authenticated candidate data across sessions.
+- **1-Click Demo Portals**: Seamless evaluation mode with pre-configured personas (Alex Sharma, Sarah Jenkins, Admin) accessible via quick-access controls.
 
-### Module 2: Candidate Onboarding & Resume NLP Parser
-- 6-stage wizard tracking Personal Info, Preferences, Resume Parsing, GitHub, Skills, and Profile Health.
-- Animated multi-stage resume parser extracting skills, education credentials, projects, and ATS formatting flags.
-- User-editable extracted data ensuring human-in-the-loop accuracy.
+### Module 2: Dynamic Candidate Profile & Resume Re-Evaluation
+- Comprehensive candidate schema stored in SQLite: personal information, headline, experience years, location, education, target salary, and skill badges.
+- **Multi-Format Resume Parser**: Supports `.pdf`, `.docx`, and `.txt` uploads with automated extraction of skills, education, and ATS score.
+- **Resume Viewer & Re-upload System**: Candidates can view active resume metadata and re-upload new iterations directly from `/profile`, immediately triggering automated compatibility re-evaluation across all active listings.
 
-### Module 3: GitHub Code Intelligence
-- Connects repository accounts to detect programming languages, contribution cadence, and dependencies.
+### Module 3: Real GitHub Code Intelligence
+- Replaces static placeholders with custom GitHub input (`https://github.com/username` or `@username`).
+- Connects to GitHub's public API to dynamically fetch public repositories, primary languages, avatar URLs, and activity stats.
 - Translates repository data into quantified, impact-oriented resume achievement bullets (*"Add Project to Resume"*).
 
 ### Module 4: Explainable Career Matchmaker & Search
 - Live multi-filter search engine (Job title, Location, Remote/Hybrid mode, Minimum Match Score slider, Experience).
-- Smart Job Cards displaying logo, title, compensation, compatibility badge, checked matched skills, and alerted missing skills.
+- Smart Job Cards displaying company branding, salary range, compatibility badge, checked matched skills, and alerted missing skills.
 - Transparent drill-down answering: **WHAT?**, **WHY?**, **WHAT'S MISSING?**, **WHAT SHOULD I DO?**, and **WHAT HAPPENS IF I DO?**.
+- Evaluates dynamically against the authenticated user's actual stored skills, ensuring genuine match scores.
 
 ### Module 5: Skill Gap Diagnostics & 4-Week Learning Roadmap
 - Categorizes skills into **You Have** vs **You're Missing**.
@@ -114,7 +127,11 @@ $$\text{Status} = \begin{cases}
 - AI candidate ranking sorting applicants by compatibility score with candidate profile drawers.
 - Interview management module allowing recruiters to schedule video screens with Google Meet links.
 
-### Module 8: Superadmin Telemetry & Viva Visualizer
+### Module 8: Unified Dark Mode & Settings Hub
+- High-contrast, theme-aware user interface supporting dynamic toggle between Light and Dark modes across all 15+ pages.
+- Integrated Settings Hub accessible from any page to configure appearance, manage session, and switch role portals.
+
+### Module 9: Superadmin Telemetry & Viva Visualizer
 - System monitoring tracking API uptime, vector search latency, active jobs, and moderation logs.
 - Dedicated interactive Technical Architecture Visualizer (`/viva`) designed for academic defense.
 
@@ -124,28 +141,28 @@ $$\text{Status} = \begin{cases}
 
 ### Software Requirements
 - **Operating System**: Windows 10/11, macOS, or Linux.
-- **Frontend Framework**: Next.js 14+ (React 18+, TypeScript).
-- **Styling & UI**: Tailwind CSS, Lucide Icons, Recharts.
-- **Backend Framework**: Python 3.12, FastAPI, Uvicorn, Pydantic.
-- **ORM & Database**: SQLAlchemy, SQLite (production ready for PostgreSQL + pgvector).
-- **Natural Language Processing**: Scikit-Learn (TF-IDF & Cosine Similarity), Regex tokenizers.
+- **Frontend Framework**: Next.js 14+ (React 18+, TypeScript, App Router).
+- **Styling & UI**: Tailwind CSS (dark mode enabled), Lucide Icons, Recharts.
+- **Backend Framework**: Python 3.12, FastAPI, Uvicorn, Pydantic v2.
+- **ORM & Database**: SQLAlchemy with SQLite (production-ready for PostgreSQL + pgvector).
+- **Natural Language Processing**: Scikit-Learn (TF-IDF & Cosine Similarity), PDF/DOCX text parsers, regex tokenizers.
 - **Version Control**: Git, GitHub.
 
 ### Hardware Requirements
 - **Processor**: Intel Core i3 / AMD Ryzen 3 or higher.
 - **RAM**: Minimum 4 GB (8 GB recommended).
 - **Storage**: Minimum 1 GB available disk space.
-- **Network**: Localhost environment (Internet connection required for remote package assets).
+- **Network**: Localhost environment (Internet connection required for remote package assets and GitHub API lookup).
 
 ---
 
 ## 9. FUTURE ENHANCEMENTS & ROADMAP
 1. **Browser Extension (Chrome/Edge)**: One-click candidate matching while browsing external job sites (LinkedIn, Indeed).
-2. **External Job Board Connectors**: Ingestion scrapers for live employer postings.
+2. **External Job Board Connectors**: Ingestion scrapers for live employer postings via Greenhouse and Lever APIs.
 3. **Automated Application Dispatch**: One-click application submission via official company career APIs.
 4. **Audio AI Mock Interview**: Voice-based bidirectional evaluation utilizing speech-to-text and tone modulation analysis.
 
 ---
 
 ## 10. CONCLUSION
-Skills2Job transforms job searching from a frustrating guessing game into a structured, transparent, and actionable career acceleration process. By providing explainable AI compatibility scores, safeguarding candidates from unfair disqualifications through the Eligibility Engine, and supplying structured 4-week learning roadmaps, the platform delivers significant value to both aspiring technical professionals and corporate hiring teams.
+Skills2Job transforms job searching from a frustrating guessing game into a structured, transparent, and actionable career acceleration process. By providing explainable AI compatibility scores, safeguarding candidates from unfair disqualifications through the Eligibility Engine, providing dynamic data persistence, and supplying structured 4-week learning roadmaps, the platform delivers significant value to both aspiring technical professionals and corporate hiring teams.

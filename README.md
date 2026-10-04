@@ -2,7 +2,9 @@
 
 > *"Turn Your Skills Into Your Next Opportunity."*
 
-Skills2Job is an AI-powered career matchmaking and recruitment platform built to solve algorithmic rejection. Instead of candidates blindly applying to hundreds of jobs, Skills2Job analyzes resumes, verified GitHub repositories, skills, and preferences to provide **5-factor explainable compatibility scores**, **skill-gap diagnostics**, **personalized learning plans**, and **interactive recruitment pipelines**.
+Skills2Job is an intelligent, full-stack career matchmaking and talent acquisition platform built to solve algorithmic rejection. The platform ingests candidate resumes, analyzes connected GitHub repositories, evaluates career preferences, and compares them against multi-tiered job requirements to provide **5-factor explainable compatibility scores**, **eligibility evaluation**, **skill-gap diagnostics**, **personalized 4-week learning roadmaps**, and **interactive recruitment pipelines**.
+
+All user profiles, resumes, skills, GitHub connections, and applications are dynamically persisted in an SQLite relational database with real-time recalculation of compatibility and ATS scores.
 
 ---
 
@@ -10,7 +12,7 @@ Skills2Job is an AI-powered career matchmaking and recruitment platform built to
 
 ### 1. Explainable AI Matching Engine
 - **5-Factor Compatibility Score (0–100%)**:
-  - **Required Skill Match (40%)**: Explicit comparison against mandatory role requirements.
+  - **Required Skill Match (40%)**: Explicit comparison against mandatory role requirements with synonym clustering.
   - **Experience Match (20%)**: Tenure and seniority comparison.
   - **Education Match (15%)**: Degree and field of study alignment.
   - **Project & GitHub Relevance (15%)**: Practical repository evidence and tech stack detection.
@@ -20,7 +22,7 @@ Skills2Job is an AI-powered career matchmaking and recruitment platform built to
   - **WHY?**: *9/10 required skills matched, 3 relevant GitHub projects detected, experience requirement satisfied.*
   - **WHAT'S MISSING?**: *Docker, AWS.*
   - **WHAT SHOULD I DO?**: *Learn Docker fundamentals and build one containerized project.*
-  - **WHAT HAPPENS IF I DO?**: *Estimated match improvement: +7%, unlocking 28 additional jobs.*
+  - **WHAT HAPPENS IF I DO?**: *Estimated match improvement: +7%, unlocking additional jobs.*
 
 ### 2. Eligibility Engine vs Compatibility
 - Prevents candidates from being penalized for lacking non-mandatory preferred or bonus skills.
@@ -30,37 +32,46 @@ Skills2Job is an AI-powered career matchmaking and recruitment platform built to
   - `LOW MATCH`
 - Separates skills into **Required**, **Preferred**, and **Bonus**.
 
-### 3. Job Seeker Experience
-- **Landing Page**: Modern SaaS aesthetic with live dashboard preview, visual pipeline, and 5-step workflow.
-- **6-Step Onboarding Wizard**: Animated multi-stage resume parsing (`Uploading -> Extracting -> Identifying Skills -> Analyzing Experience -> Complete`).
-- **Career Dashboard**: Profile health score (94/100), 5-factor compatibility breakdown, upcoming interviews.
-- **Job Search & Smart Filters**: Location, work mode (Remote/Hybrid/On-site), salary, and minimum match score slider.
-- **Resume Compatibility Analyzer**: ATS diagnostics, missing keywords, and Before/After rewrite suggestions.
-- **Skill Gap & 4-Week Career Learning Roadmap**: Converts missing skills into structured weekly project roadmaps.
-- **GitHub Insights**: Open-source repository analysis, commit tech detection, and *"Add Project to Resume"* bullet generator.
-- **Kanban Application Tracker**: Interactive stages (`Saved`, `Applied`, `Assessment`, `Interview`, `Offer`, `Rejected`) with conversion analytics.
-- **AI Cover Letter Generator**: Generates customized letters based on actual skills and projects with Tone and Length controls.
+### 3. Dynamic User Persistence & Session Management
+- **Stateless JWT Authentication**: Secure password hashing with persistent sessions.
+- **6-Digit Email OTP Verification**: Real email verification flow with countdown timers and resend throttling.
+- **Persistent SQLite Database**: Dynamic storage of user profiles, skills, resumes, and applications without dummy-data fallbacks.
+- **Dynamic Compatibility Recalculation**: Authenticated job seekers see personalized compatibility scores dynamically computed against their own profile.
+
+### 4. Interactive Resume Management & Re-Evaluation
+- **Multi-Format Ingestion**: Upload resumes in `.pdf`, `.docx`, `.doc`, or `.txt`.
+- **Automated Text & Skill Extraction**: Extracts technical competencies, tenure, and ATS score.
+- **Resume Viewer & Re-upload in `/profile`**: Inspect current uploaded resume metadata and re-upload new iterations to immediately re-evaluate candidate compatibility across all active listings.
+
+### 5. Real GitHub Profile Intelligence
+- **Custom Profile Input**: Connect any public GitHub profile via URL (`https://github.com/username`) or handle (`@username`).
+- **Public API Integration**: Fetches real repository counts, language distribution, and profile avatars.
+- **Resume Project Synthesizer**: Converts open-source projects into impact-driven resume bullet points.
+
+### 6. Career Accelerator Tools
+- **Skill Gap & 4-Week Roadmap**: Converts missing competencies into structured project milestones.
+- **AI Cover Letter Generator**: Generates customized cover letters referencing real projects with Tone and Length controls.
 - **AI Mock Interview Simulator**: Dynamic technical and behavioral questions with comprehensive score reports.
+- **Kanban Application Tracker**: Interactive stages (`Saved`, `Applied`, `Assessment`, `Interview`, `Offer`, `Rejected`) with conversion analytics.
 - **Career Insights**: Interactive Recharts telemetry (compatibility trends, market skill demand, application funnels).
-- **Verification Center**: Checklist and verified candidate badges.
 
-### 4. HR & Recruiter Portal
-- **Recruiter Dashboard**: Active postings, applicant tracking, and hiring pipeline metrics.
-- **Job Creator**: Post jobs with separated Required vs Preferred vs Bonus skills.
-- **AI Candidate Matching & Ranking**: Rank candidates by compatibility, inspect profile drawers, and review code links.
-- **Interview Management**: Schedule technical video interviews with Google Meet links.
+### 7. Unified Global Dark Mode
+- Full system-wide Dark and Light mode support with persistent state across all 15+ pages.
+- Accessible via Navbar and centralized Settings modal.
 
-### 5. Viva & Technical Presentation Visualizer (`/viva`)
-- Interactive end-to-end architecture pipeline showing:
-  `Resume -> PDF Parser -> NLP -> Embeddings` vs `Job Description -> Requirements Parser -> Embeddings -> Cosine Similarity + 5-Factor Rules -> Compatibility Score -> Skill Gap -> Ranking`.
+### 8. Recruiter & Admin Portals
+- **Recruiter Dashboard**: Manage job postings with 3-tier skill requirements (Required, Preferred, Bonus).
+- **Candidate Ranking**: Rank applicants by compatibility score with candidate detail drawers and interview scheduling.
+- **Superadmin Telemetry & Viva Visualizer**: System health telemetry and interactive vector pipeline visualizer (`/viva`).
 
 ---
 
 ## 🛠️ Technology Stack
 
 - **Frontend**: Next.js 14+ (App Router), TypeScript, Tailwind CSS, Lucide React, Recharts.
-- **Backend**: Python 3.12, FastAPI, Pydantic, SQLAlchemy, Vector Cosine Similarity Engine.
+- **Backend**: Python 3.12, FastAPI, Pydantic v2, SQLAlchemy, Uvicorn.
 - **Database**: SQLite (Production-ready for PostgreSQL + pgvector).
+- **NLP / Matching**: Scikit-Learn (TF-IDF & Cosine Similarity), PDF/DOCX parsing, Regex tokenizers.
 
 ---
 
@@ -85,7 +96,7 @@ Web Application: [http://localhost:3000](http://localhost:3000)
 ---
 
 ## ⚡ Instant Demo Access
-The platform includes 1-click demo accounts built into the navigation bar and login page:
+The platform includes 1-click demo accounts built into the Settings modal and login page:
 - **Job Seeker**: Alex Sharma (`alex.sharma@example.com` / `DemoAlex2026!`)
 - **HR Recruiter**: Sarah Jenkins (`sarah.jenkins@techcorp.example.com` / `DemoRecruiter2026!`)
 - **Superadmin**: Admin (`admin@skills2job.example.com` / `AdminSkills2026!`)

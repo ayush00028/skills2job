@@ -11,7 +11,7 @@ import {
 
 export default function ResumeAnalyzerPage() {
   const [resumeText, setResumeText] = useState(
-    "Alex Sharma - Full Stack Developer\n\nExperience: 3 years building responsive web applications using React, JavaScript, Node.js, Python, and SQL. Collaborated with agile teams and maintained Git version control.\n\nProjects:\n• Built e-commerce platform with microservices\n• Implemented career recommendation backend with FastAPI\n\nEducation: B.Tech in Computer Science"
+    "Full Stack Software Developer\n\nExperience: 3 years building responsive web applications using React, JavaScript, Node.js, Python, and SQL. Collaborated with agile teams and maintained Git version control.\n\nProjects:\n• Built e-commerce platform with microservices\n• Implemented career recommendation backend with FastAPI\n\nEducation: B.Tech in Computer Science"
   );
   const [jobDescription, setJobDescription] = useState(
     "We are seeking a Full Stack Developer experienced with React, Node.js, REST APIs, SQL, Docker, and AWS. The candidate will deploy scalable containerized microservices and collaborate on modern frontend features."
@@ -75,80 +75,81 @@ export default function ResumeAnalyzerPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-row min-h-screen bg-slate-50">
+    <div className="flex-1 flex flex-row min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
       <Sidebar />
 
       <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
         
         {/* Header */}
         <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 block mb-1">
+          <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 block mb-1">
             Deep ATS & Semantic Parser
           </span>
-          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Resume Compatibility Analyzer
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
             Test your resume against real job descriptions to identify missing keywords, ATS formatting issues, and rewrite suggestions.
           </p>
         </div>
 
-        {/* 2-Column Input Section (Page 33) */}
+        {/* 2-Column Input Section */}
         <div className="grid lg:grid-cols-2 gap-6">
           
           {/* Resume Input */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs flex flex-col justify-between">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs flex flex-col justify-between transition-colors">
             <div>
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 dark:border-slate-800">
                 <div className="flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-indigo-600" />
-                  <h3 className="text-sm font-extrabold text-slate-900">Your Resume Content</h3>
+                  <FileText className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">Your Resume Content</h3>
                 </div>
-                <span className="text-xs bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">
-                  Alex_Sharma_Resume.pdf
+                <span className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold px-2 py-0.5 rounded">
+                  Plain Text / PDF
                 </span>
               </div>
               <textarea
                 rows={9}
                 value={resumeText}
                 onChange={(e) => setResumeText(e.target.value)}
-                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-mono text-slate-800 focus:bg-white focus:outline-none focus:border-indigo-600 resize-none"
+                className="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl text-xs font-mono text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-500 resize-none"
                 placeholder="Paste your resume plain text here..."
               ></textarea>
             </div>
 
-            <div className="pt-3 flex justify-between items-center text-xs text-slate-400">
-              <span>{resumeText.split(" ").length} words analyzed</span>
-              <span className="text-indigo-600 font-bold cursor-pointer">Re-upload PDF</span>
+            <div className="pt-3 flex justify-between items-center text-xs text-slate-400 dark:text-slate-500">
+              <span>{resumeText.split(/\s+/).filter(Boolean).length} words analyzed</span>
+              <span className="text-indigo-600 dark:text-indigo-400 font-bold">Dynamic Token TF-IDF</span>
             </div>
           </div>
 
           {/* Job Description Input */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs flex flex-col justify-between">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs flex flex-col justify-between transition-colors">
             <div>
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 dark:border-slate-800">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-indigo-600" />
-                  <h3 className="text-sm font-extrabold text-slate-900">Target Job Description</h3>
+                  <Sparkles className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">Target Job Description</h3>
                 </div>
-                <span className="text-xs text-indigo-600 font-bold cursor-pointer">
-                  Select Existing Job
+                <span className="text-xs text-indigo-600 dark:text-indigo-400 font-bold">
+                  Live Job Match
                 </span>
               </div>
               <textarea
                 rows={9}
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
-                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-mono text-slate-800 focus:bg-white focus:outline-none focus:border-indigo-600 resize-none"
+                className="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl text-xs font-mono text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-500 resize-none"
                 placeholder="Paste any employer job description here..."
               ></textarea>
             </div>
 
             <div className="pt-3 flex justify-end">
               <button
+                type="button"
                 onClick={runAnalysis}
                 disabled={loading}
-                className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-xs flex items-center gap-2 transition-all"
+                className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-xs flex items-center gap-2 transition-all disabled:opacity-60"
               >
                 {loading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
                 <span>Analyze Compatibility</span>
@@ -158,80 +159,80 @@ export default function ResumeAnalyzerPage() {
 
         </div>
 
-        {/* Results Section (Pages 33-35) */}
+        {/* Results Section */}
         {analysis && (
           <div className="space-y-6 animate-in fade-in">
             
-            {/* Radar / Metrics Bar (Page 33-34) */}
-            <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs">
-              <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+            {/* Radar / Metrics Bar */}
+            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs transition-colors">
+              <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100 dark:border-slate-800">
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-600 block">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 block">
                     AI Match Engine
                   </span>
-                  <h3 className="text-lg font-extrabold text-slate-900">
+                  <h3 className="text-lg font-extrabold text-slate-900 dark:text-white">
                     Compatibility Diagnostics
                   </h3>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-3xl font-extrabold text-indigo-600">{analysis.overall_compatibility}%</span>
+                  <span className="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">{analysis.overall_compatibility}%</span>
                   <span className="text-xs font-bold text-slate-400 uppercase">Overall Match</span>
                 </div>
               </div>
 
               <div className="grid sm:grid-cols-5 gap-3 text-center">
-                <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                  <span className="text-xl font-extrabold text-slate-900">{analysis.ats_compatibility}%</span>
-                  <span className="text-[10px] text-slate-400 font-bold uppercase block mt-1">ATS Compatibility</span>
+                <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
+                  <span className="text-xl font-extrabold text-slate-900 dark:text-white">{analysis.ats_compatibility}%</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase block mt-1">ATS Compatibility</span>
                 </div>
-                <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                  <span className="text-xl font-extrabold text-slate-900">{analysis.semantic_match}%</span>
-                  <span className="text-[10px] text-slate-400 font-bold uppercase block mt-1">Semantic Match</span>
+                <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
+                  <span className="text-xl font-extrabold text-slate-900 dark:text-white">{analysis.semantic_match}%</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase block mt-1">Semantic Match</span>
                 </div>
-                <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                  <span className="text-xl font-extrabold text-slate-900">{analysis.keyword_match}%</span>
-                  <span className="text-[10px] text-slate-400 font-bold uppercase block mt-1">Keyword Match</span>
+                <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
+                  <span className="text-xl font-extrabold text-slate-900 dark:text-white">{analysis.keyword_match}%</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase block mt-1">Keyword Match</span>
                 </div>
-                <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                  <span className="text-xl font-extrabold text-slate-900">{analysis.experience_match}%</span>
-                  <span className="text-[10px] text-slate-400 font-bold uppercase block mt-1">Experience Match</span>
+                <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
+                  <span className="text-xl font-extrabold text-slate-900 dark:text-white">{analysis.experience_match}%</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase block mt-1">Experience Match</span>
                 </div>
-                <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                  <span className="text-xl font-extrabold text-slate-900">{analysis.education_match}%</span>
-                  <span className="text-[10px] text-slate-400 font-bold uppercase block mt-1">Education Match</span>
+                <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
+                  <span className="text-xl font-extrabold text-slate-900 dark:text-white">{analysis.education_match}%</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase block mt-1">Education Match</span>
                 </div>
               </div>
             </div>
 
-            {/* Matched vs Missing Keywords & Potential ATS Problems (Page 34) */}
+            {/* Matched vs Missing Keywords & Potential ATS Problems */}
             <div className="grid md:grid-cols-2 gap-6">
               
               {/* Keywords */}
-              <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-4">
-                <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
+              <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-4 transition-colors">
+                <h4 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">
                   Matched & Missing Keywords
                 </h4>
 
                 <div>
-                  <span className="text-xs font-bold text-emerald-700 block mb-1.5 flex items-center gap-1">
+                  <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 block mb-1.5 flex items-center gap-1">
                     <CheckCircle2 className="w-3.5 h-3.5" /> Matched Keywords ({analysis.matched_keywords?.length || 0})
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {analysis.matched_keywords?.map((k: string) => (
-                      <span key={k} className="text-xs font-semibold bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded-lg border border-emerald-100">
+                      <span key={k} className="text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 px-2.5 py-1 rounded-lg border border-emerald-100 dark:border-emerald-900">
                         {k}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-slate-100">
-                  <span className="text-xs font-bold text-rose-700 block mb-1.5 flex items-center gap-1">
+                <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+                  <span className="text-xs font-bold text-rose-700 dark:text-rose-400 block mb-1.5 flex items-center gap-1">
                     <AlertTriangle className="w-3.5 h-3.5" /> Missing Keywords ({analysis.missing_keywords?.length || 0})
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {analysis.missing_keywords?.map((k: string) => (
-                      <span key={k} className="text-xs font-semibold bg-rose-50 text-rose-800 px-2.5 py-1 rounded-lg border border-rose-100">
+                      <span key={k} className="text-xs font-semibold bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 px-2.5 py-1 rounded-lg border border-rose-100 dark:border-rose-900">
                         {k}
                       </span>
                     ))}
@@ -240,15 +241,15 @@ export default function ResumeAnalyzerPage() {
               </div>
 
               {/* Potential ATS Problems */}
-              <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-4">
-                <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider flex items-center gap-1.5 text-amber-600">
+              <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-4 transition-colors">
+                <h4 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5 text-amber-600 dark:text-amber-400">
                   <AlertTriangle className="w-4 h-4" />
                   Potential ATS Problems Detected
                 </h4>
 
                 <div className="space-y-2.5">
                   {analysis.potential_ats_problems?.map((prob: string, idx: number) => (
-                    <div key={idx} className="p-3 rounded-xl bg-amber-50/60 border border-amber-200/80 text-xs text-amber-900 flex items-start gap-2">
+                    <div key={idx} className="p-3 rounded-xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/80 text-xs text-amber-900 dark:text-amber-200 flex items-start gap-2">
                       <span className="font-bold">•</span>
                       <span>{prob}</span>
                     </div>
@@ -258,46 +259,47 @@ export default function ResumeAnalyzerPage() {
 
             </div>
 
-            {/* Resume Improvement Suggestions (Pages 34-35, 67) */}
-            <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            {/* Resume Improvement Suggestions */}
+            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-4 transition-colors">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
                 <div>
-                  <h4 className="text-base font-extrabold text-slate-900">
+                  <h4 className="text-base font-extrabold text-slate-900 dark:text-white">
                     Resume Improvement Suggestions
                   </h4>
-                  <p className="text-xs text-slate-500">
-                    Replace weak phrasing with quantifiable, ATS-optimized descriptions (No invented achievements).
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    Replace weak phrasing with quantifiable, ATS-optimized descriptions.
                   </p>
                 </div>
-                <span className="text-xs bg-indigo-50 text-indigo-700 font-bold px-3 py-1 rounded-lg">
+                <span className="text-xs bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 font-bold px-3 py-1 rounded-lg border border-indigo-100 dark:border-indigo-900">
                   AI Recommended
                 </span>
               </div>
 
               <div className="space-y-4">
                 {analysis.resume_improvement_suggestions?.map((sug: any, idx: number) => (
-                  <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                  <div key={idx} className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-extrabold text-indigo-700 uppercase tracking-wider">
+                      <span className="text-xs font-extrabold text-indigo-700 dark:text-indigo-300 uppercase tracking-wider">
                         {sug.category}
                       </span>
-                      <span className="text-[11px] text-slate-400 font-medium">{sug.rationale}</span>
+                      <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">{sug.rationale}</span>
                     </div>
 
                     <div className="grid sm:grid-cols-2 gap-3 text-xs">
-                      <div className="p-3 bg-white rounded-xl border border-slate-200">
+                      <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
                         <span className="text-[10px] font-bold text-rose-500 uppercase block mb-1">Before (Weak):</span>
-                        <p className="text-slate-600 line-through">"{sug.before}"</p>
+                        <p className="text-slate-600 dark:text-slate-400 line-through">"{sug.before}"</p>
                       </div>
 
-                      <div className="p-3 bg-emerald-50/50 rounded-xl border border-emerald-200">
-                        <span className="text-[10px] font-bold text-emerald-700 uppercase block mb-1">Suggestion (Optimized):</span>
-                        <p className="text-slate-900 font-semibold">"{sug.after}"</p>
+                      <div className="p-3 bg-emerald-50/50 dark:bg-emerald-950/40 rounded-xl border border-emerald-200 dark:border-emerald-800">
+                        <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 uppercase block mb-1">Suggestion (Optimized):</span>
+                        <p className="text-slate-900 dark:text-white font-semibold">"{sug.after}"</p>
                       </div>
                     </div>
 
                     <div className="flex justify-end gap-2 pt-1">
                       <button
+                        type="button"
                         onClick={() => handleApplySuggestion(idx, sug.after)}
                         disabled={appliedSuggestions[idx]}
                         className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-colors ${
